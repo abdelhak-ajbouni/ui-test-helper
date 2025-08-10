@@ -138,3 +138,8 @@ temp/
 
 # Chrome Extension Store assets (if any)
 store-assets/
+
+# Test artifacts
+playwright-report/
+test-results/
+debug.js

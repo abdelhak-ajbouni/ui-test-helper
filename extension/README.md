@@ -6,18 +6,22 @@ This directory contains all the Chrome extension files for the UI Test Helper.
 
 ```
 extension/
-├── manifest.json          # Extension configuration
+├── manifest.json          # Extension configuration (Manifest V3)
 ├── background.js          # Service worker handling keyboard commands & injection
+├── popup.html             # Extension popup interface
+├── popup.css              # Popup styles
+├── popup.js               # Popup functionality
 ├── sidepanel.html         # Optional side panel UI
 ├── sidepanel.js           # Side panel logic
-├── inspector.js           # Main content script
+├── inspector.js           # Main content script for element inspection
 ├── inspector.css          # Inspector UI styles
+├── query-generator.js     # Query generation logic
 ├── icons/                 # Extension icons
-│   ├── icon16.svg
-│   ├── icon48.svg
-│   └── icon128.svg
-├── test.html              # Test page for development
-└── test-buttons.html      # Button functionality test page
+│   ├── icon16.png
+│   ├── icon32.png
+│   ├── icon48.png
+│   └── icon128.png
+└── README.md              # This file
 ```
 
 ## 🚀 Development
@@ -47,44 +51,72 @@ Use the test pages to verify functionality:
 ## 📋 Key Files
 
 ### manifest.json
-- Defines extension permissions and configuration
-- Specifies popup and content script files
-- Sets up Chrome extension API access
+- Defines extension permissions and configuration (Manifest V3)
+- Specifies popup, service worker, and content script files
+- Sets up Chrome extension API access with minimal permissions
+
+### popup.html/css/js
+- Main extension interface (popup when clicking toolbar icon)
+- Start/stop inspection functionality
+- Error handling and user feedback
+
+### background.js
+- Service worker for keyboard shortcuts and cross-tab communication
+- Handles content script injection on demand
+- Manages side panel integration
+
+### inspector.js/css + query-generator.js
+- Main content script injected into web pages
+- Handles element inspection, highlighting, and user interaction
+- Generates accessibility-first testing queries
+- Manages clipboard operations and results panel UI
 
 ### sidepanel.html/js
-- Optional side panel UI for toggling the inspector and docs link
-- Opened automatically when clicking the toolbar icon (if supported)
-
-### inspector.js/css
-- Main content script injected into web pages
-- Handles element inspection and highlighting
-- Generates testing queries and displays results panel
-- Manages clipboard operations
+- Optional side panel UI for instructions and documentation links
+- Automatically opened on first extension use (Chrome versions that support it)
 
 ## 🔧 Configuration
 
-The extension uses Manifest V3 with these key permissions:
-- `activeTab` - Access to the current active tab
-- `scripting` - Programmatic content script injection
+The extension uses **Manifest V3** with **minimal permissions**:
+- `activeTab` - Access to the current active tab only when user activates extension
+- `scripting` - Programmatic content script injection for inspection functionality
+
+**No broad permissions** like `<all_urls>` - privacy-focused design!
 
 Keyboard and icon support:
 - `commands` → `toggle-inspector` bound to `Alt+Shift+U`
-- Toolbar icon click toggles the inspector and opens the side panel
-- Both are handled in `background.js` via `chrome.scripting`
+- Toolbar icon click opens popup interface
+- Background service worker handles keyboard shortcuts and injection
+- Side panel opens automatically for onboarding (where supported)
 
 ## 🐛 Debugging
 
-1. **Extension Console**: Right-click extension icon → "Inspect popup"
-2. **Content Script**: Open DevTools on any webpage, check Console tab
-3. **Service Worker**: Go to `chrome://extensions/` → click `Service worker` link under the extension to inspect logs
+1. **Extension Popup**: Right-click extension icon → "Inspect popup"
+2. **Content Script**: Open DevTools on any webpage, check Console tab for inspector logs
+3. **Service Worker**: Go to `chrome://extensions/` → click `Service worker` link under the extension
+4. **Side Panel**: Open side panel and use DevTools to inspect
+
+### Common Issues
+- **Not working on special pages**: Extension cannot run on `chrome://`, `edge://`, or extension pages
+- **Permission errors**: Ensure you're on a regular webpage (http/https)
+- **Script injection fails**: Try refreshing the page and reloading the extension
 
 ## 📦 Building for Distribution
 
-When ready to publish:
+### Chrome Web Store Preparation
+1. Ensure all files are production-ready (no console.debug statements)
+2. Verify icons are PNG format (16, 32, 48, 128px)
+3. Test on multiple websites and Chrome versions
+4. Create a ZIP file of the entire `extension/` folder
+5. Upload to Chrome Web Store Developer Dashboard
 
-1. Ensure all files are in this directory
-2. Create a ZIP file of the entire `extension/` folder
-3. Upload to Chrome Web Store Developer Dashboard
+### Privacy Policy
+Required for Chrome Web Store: https://abdelhak-ajbouni.github.io/ui-test-helper/privacy-policy
+
+### Store Assets Needed
+- Screenshots of extension in action
+- Promotional images (440x280, 920x680, 1400x560)
+- Detailed description and feature list
 
 ## 🧪 Testing
 

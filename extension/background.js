@@ -80,7 +80,6 @@ chrome.action.onClicked.addListener(async () => {
     }
   } catch (e) {
     // Side panel may not be available in all Chrome versions
-    console.debug('Side panel open failed or unsupported:', e?.message || e);
   }
 });
 

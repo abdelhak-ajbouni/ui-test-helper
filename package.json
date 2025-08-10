@@ -1,6 +1,6 @@
 {
   "name": "ui-test-helper",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Chrome extension to generate testing queries for React testing libraries",
   "scripts": {
     "test": "vitest run --coverage",

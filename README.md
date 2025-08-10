@@ -25,33 +25,36 @@ The extension generates queries in order of priority:
 
 ## Installation
 
-### Method 1: Load as Unpacked Extension (Recommended for Development)
+### Chrome Web Store (Coming Soon)
+*This extension is currently under review for the Chrome Web Store.*
+
+### Load as Unpacked Extension (Development)
 
 1. Clone or download this repository
+   ```bash
+   git clone https://github.com/abdelhak-ajbouni/ui-test-helper.git
+   cd ui-test-helper
+   ```
 2. Open Chrome and navigate to `chrome://extensions/`
 3. Enable "Developer mode" in the top right corner
 4. Click "Load unpacked" button
 5. Select the `extension/` directory
 6. The extension should now appear in your extensions toolbar
 
-### Method 2: Manual Installation
-
-1. Download the extension files
-2. Ensure you have all required files:
-   - `manifest.json`
-   - `popup.html`, `popup.css`, `popup.js`
-   - `inspector.js`, `inspector.css`
-   - `icons/` directory (SVG icons included)
-
 ## Usage
 
+### Quick Start
 1. **Open any webpage** you want to test
-2. **Click the UI Test Helper extension icon** in your browser toolbar
-3. **Click "Start Inspection"** in the popup
+2. **Click the UI Test Helper extension icon** in your browser toolbar  
+3. **Click "🔍 Start Inspection"** in the popup
 4. **Hover over elements** to see them highlighted
 5. **Click any element** to generate testing queries
 6. **Copy the queries** you want to use in your tests
-7. **Press ESC** or click "Stop Inspection" to exit
+7. **Press ESC** or click "🛑 Stop Inspection" to exit
+
+### Keyboard Shortcuts
+- **Alt+Shift+U** - Toggle inspector mode
+- **ESC** - Exit inspector mode
 
 ## Example Output
 
@@ -68,22 +71,27 @@ getByTestId('submit-btn')
 ```
 ui-test-helper/
 ├── extension/            # Chrome extension files
-│   ├── manifest.json        # Extension configuration
+│   ├── manifest.json        # Extension configuration (Manifest V3)
 │   ├── popup.html          # Extension popup interface
 │   ├── popup.css           # Popup styles
 │   ├── popup.js            # Popup functionality
 │   ├── inspector.js        # Main content script
 │   ├── inspector.css       # Inspector UI styles
-│   ├── icons/              # Extension icons
-│   ├── test.html           # Test page
-│   └── test-buttons.html   # Button test page
+│   ├── background.js       # Service worker
+│   ├── query-generator.js  # Query generation logic
+│   ├── sidepanel.html      # Side panel interface
+│   ├── sidepanel.js        # Side panel functionality
+│   └── icons/              # Extension icons (PNG format)
 
 ├── tests/                # Test suite
-│   ├── unit/               # Unit tests
-│   ├── integration/        # Integration tests
-│   ├── e2e/               # End-to-end tests
-│   └── jest.e2e.config.js  # E2E test configuration
+│   ├── unit/               # Unit tests (Vitest)
+│   ├── e2e/                # End-to-end tests (Playwright)
+│   ├── test.html           # Test page for development
+│   └── setup.js            # Test configuration
 ├── package.json          # Dependencies and scripts
+├── vitest.config.js      # Vitest configuration
+├── playwright.config.js  # Playwright configuration
+├── privacy-policy.md     # Privacy policy
 └── README.md             # This file
 ```
 
@@ -116,29 +124,34 @@ For testing the extension, you can use the included test pages:
 # Install dependencies
 npm install
 
-# Run unit and integration tests
+# Run unit tests
 npm test
+
+# Run unit tests in watch mode
+npm run test:watch
 
 # Run end-to-end browser tests
 npm run test:e2e
 
+# Run E2E tests with UI
+npm run test:e2e:ui
+
 # Run all tests with coverage
 npm run test:coverage
+
+# Run all tests (unit + e2e)
+npm run test:all
 ```
 
-## Roadmap
+## Privacy & Security
 
-### Phase 2: Polish & Usability (Planned)
-- Draggable results panel
-- Better viewport positioning
-- Toast notifications
-- More query types (getByDisplayValue, etc.)
+🔒 **Privacy-First Design**
+- **No data collection** - Everything processes locally in your browser
+- **No external connections** - No data sent to servers
+- **Minimal permissions** - Only `activeTab` and `scripting` permissions
+- **Open source** - Full transparency in code
 
-### Future Features
-- Configuration options
-- Framework-specific toggles (Testing Library, Cypress, Playwright)
-- Accessibility insights
-- Query validation
+Read our full [Privacy Policy](https://abdelhak-ajbouni.github.io/ui-test-helper/privacy-policy)
 
 ## Contributing
 
@@ -150,10 +163,12 @@ npm run test:coverage
 
 ## Browser Compatibility
 
-- ✅ Chrome (Manifest V3)
-- ✅ Edge (Chromium-based)
-- ⚠️ Firefox (requires manifest modifications)
-- ❌ Safari (not supported)
+- ✅ **Chrome** (Manifest V3) - Primary support
+- ✅ **Edge** (Chromium-based) - Full support  
+- ⚠️ **Firefox** (requires manifest modifications)
+- ❌ **Safari** (not supported)
+
+*Note: Built with Chrome Manifest V3 for modern security standards.*
 
 ## License
 

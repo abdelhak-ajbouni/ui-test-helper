@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Test Helper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>UI Test Helper</h1>
+      <p>Generate testing queries for UI elements</p>
+      <div class="close-info">
+        <small>Press Esc or click outside to close</small>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button id="startInspection" class="primary-btn">
+        <span class="icon">🔍</span>
+        Start Inspection
+      </button>
+      
+      <div id="status" class="status hidden">
+        <span class="status-icon">✅</span>
+        <span class="status-text">Inspection mode active</span>
+      </div>
+    </div>
+    
+    <div class="instructions">
+      <p>Click "Start Inspection" then click on any element on the page to generate testing queries.</p>
+      <p><small>Tip: You can also press <strong>Alt+Shift+U</strong> to toggle the inspector without opening the popup.</small></p>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 

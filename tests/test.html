@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Test Helper - Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        
+        .section h2 {
+            margin-top: 0;
+            color: #2d3748;
+            border-bottom: 2px solid #4299e1;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin: 15px 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #4a5568;
+        }
+        
+        input, textarea, select, button {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background: #3182ce;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        
+        .badge {
+            background: #e6fffa;
+            color: #234e52;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .navigation {
+            background: #2d3748;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .navigation a {
+            color: #90cdf4;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        
+        .navigation a:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>UI Test Helper - Test Page</h1>
+        <p>This page contains various UI elements to test the Chrome extension. Use the extension to inspect elements and generate testing queries.</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Form Elements Section -->
+    <section class="section">
+        <h2>Form Elements</h2>
+        
+        <form id="test-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="user@example.com" aria-label="Email address">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••">
+            </div>
+            
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" name="country">
+                    <option value="">Select a country</option>
+                    <option value="us">United States</option>
+                    <option value="ca">Canada</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="de">Germany</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="newsletter" value="yes"> 
+                    Subscribe to newsletter
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label>Gender:</label>
+                <label><input type="radio" name="gender" value="male"> Male</label>
+                <label><input type="radio" name="gender" value="female"> Female</label>
+                <label><input type="radio" name="gender" value="other"> Other</label>
+            </div>
+            
+            <div class="form-group">
+                <label for="birthdate">Birth Date</label>
+                <input type="date" id="birthdate" name="birthdate">
+            </div>
+            
+            <div class="form-group">
+                <label for="website">Website URL</label>
+                <input type="url" id="website" name="website" placeholder="https://example.com">
+            </div>
+        </form>
+    </section>
+
+    <!-- Buttons Section -->
+    <section class="section">
+        <h2>Buttons & Interactive Elements</h2>
+        
+        <div class="button-group">
+            <button id="test-btn" type="button" onclick="alert('Test button clicked!')">Test Button</button>
+            <button type="submit" form="test-form">Submit Form</button>
+            <button type="button" onclick="alert('Primary action!')">Primary Action</button>
+            <button type="button" disabled>Disabled Button</button>
+            <button type="reset" form="test-form">Reset Form</button>
+        </div>
+        
+        <div class="button-group">
+            <button data-testid="save-btn" aria-label="Save document">Save</button>
+            <button data-testid="delete-btn" title="Delete item permanently">Delete</button>
+            <button data-test-id="export-btn">Export Data</button>
+        </div>
+        
+        <div class="button-group">
+            <a href="#section1" role="button">Link Button</a>
+            <span role="button" tabindex="0" onclick="alert('Custom button clicked')">Custom Button</span>
+        </div>
+    </section>
+
+    <!-- Content Elements Section -->
+    <section class="section">
+        <h2>Content & Media Elements</h2>
+        
+        <div class="card">
+            <h3>Article Title</h3>
+            <p>This is a sample article with some text content that can be used for testing text-based queries.</p>
+            <span class="badge">Featured</span>
+        </div>
+        
+        <div class="card">
+            <h4>Product Card</h4>
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik04NyA0OEM4Ny44ODQgNDggODggNDcuMTA0NiA4OCA0NlY0MkM4OCA0MC44OTU0IDg3LjEwNDYgNDAgODYgNDBIODJDODAuODk1NCA0MCA4MCA0MC44OTU0IDgwIDQyVjQ2QzgwIDQ3LjEwNDYgODAuODk1NCA0OCA4MiA0OEg4N1oiIGZpbGw9IiM5Q0E0QUYiLz4KPHA+SW1hZ2UgUGxhY2Vob2xkZXI8L3A+Cjwvc3ZnPgo=" 
+                 alt="Product placeholder image" 
+                 title="Sample product image">
+            <p>Sample product description with <strong>important details</strong> highlighted.</p>
+            <button data-testid="add-to-cart">Add to Cart</button>
+        </div>
+        
+        <div class="card">
+            <h5>User Information</h5>
+            <p>Name: <span data-testid="user-name">John Doe</span></p>
+            <p>Status: <span aria-label="User status">Active</span></p>
+            <p>Last Login: <time datetime="2023-12-01">December 1, 2023</time></p>
+        </div>
+    </section>
+
+    <!-- Table Section -->
+    <section class="section">
+        <h2>Table Elements</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alice Johnson</td>
+                    <td>alice@example.com</td>
+                    <td>Admin</td>
+                    <td>
+                        <button data-testid="edit-user-1">Edit</button>
+                        <button data-testid="delete-user-1" title="Delete Alice Johnson">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Bob Smith</td>
+                    <td>bob@example.com</td>
+                    <td>User</td>
+                    <td>
+                        <button data-testid="edit-user-2">Edit</button>
+                        <button data-testid="delete-user-2" title="Delete Bob Smith">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Custom Elements Section -->
+    <section class="section">
+        <h2>Custom & Complex Elements</h2>
+        
+        <div role="tabpanel" aria-labelledby="tab1">
+            <h3 id="tab1">Tab Content</h3>
+            <p>This is content inside a tab panel with proper ARIA attributes.</p>
+        </div>
+        
+        <div role="alert" aria-live="polite" id="notification" class="hidden">
+            <p>This is a notification message</p>
+            <button onclick="document.getElementById('notification').classList.add('hidden')">Dismiss</button>
+        </div>
+        
+        <div role="search">
+            <label for="search-input">Search:</label>
+            <input type="search" id="search-input" placeholder="Search products..." aria-describedby="search-help">
+            <button type="submit">Search</button>
+            <p id="search-help">Enter keywords to search for products</p>
+        </div>
+        
+        <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 200px; height: 20px; background: #e2e8f0; border-radius: 10px;">
+            <div style="width: 60%; height: 100%; background: #4299e1; border-radius: 10px;"></div>
+        </div>
+    </section>
+
+    <!-- Edge Cases Section -->
+    <section class="section">
+        <h2>Edge Cases & Tricky Elements</h2>
+        
+        <!-- Elements with special characters -->
+        <div class="form-group">
+            <label for="special-chars">Special Characters Input</label>
+            <input id="special-chars" type="text" placeholder="Enter symbols: @#$%^&*()" 
+                   aria-label="Input with special characters">
+        </div>
+        
+        <!-- Very long text content -->
+        <button data-testid="long-text-btn">
+            This is a button with extremely long text content that exceeds normal length limits and should test how the extension handles very lengthy button labels and text content that might be truncated or cause issues with query generation
+        </button>
+        
+        <!-- Elements with similar attributes -->
+        <div class="button-group">
+            <button data-testid="similar-btn-1" title="Save document">Save</button>
+            <button data-testid="similar-btn-2" title="Save document">Save</button>
+            <button data-testid="similar-btn-3" aria-label="Save document">Save</button>
+        </div>
+        
+        <!-- Empty and whitespace elements -->
+        <button id="empty-btn"></button>
+        <button id="whitespace-btn">   </button>
+        <span data-testid="empty-span"></span>
+        
+        <!-- Nested elements with conflicting attributes -->
+        <div role="button" data-testid="nested-container">
+            <span aria-label="Inner action">
+                <button>Nested Button</button>
+            </span>
+        </div>
+        
+        <!-- Elements with multiple roles/attributes -->
+        <input type="text" 
+               id="multi-attr" 
+               name="multi-attr"
+               placeholder="Multiple attributes"
+               aria-label="Multi-attribute input"
+               title="Input with many attributes"
+               data-testid="multi-attr-input"
+               value="pre-filled">
+        
+        <!-- Hidden and dynamically shown elements -->
+        <button id="toggle-hidden" onclick="document.getElementById('hidden-element').style.display = document.getElementById('hidden-element').style.display === 'none' ? 'block' : 'none'">
+            Toggle Hidden Element
+        </button>
+        <div id="hidden-element" style="display: none;" data-testid="dynamic-element">
+            <p>This element is initially hidden</p>
+            <button data-testid="hidden-btn">Hidden Button</button>
+        </div>
+        
+        <!-- Elements with numbers and special IDs -->
+        <button id="btn-123" data-testid="test-456">Numeric IDs</button>
+        <input id="input_with_underscores" data-testid="input-with-dashes" type="text">
+        
+        <!-- Case sensitivity tests -->
+        <button DATA-TESTID="uppercase-testid">Uppercase TestID</button>
+        <button data-TestId="mixedCase-testid">Mixed Case TestID</button>
+        
+        <!-- Elements that change dynamically -->
+        <button id="dynamic-text-btn" onclick="this.textContent = this.textContent.trim() === 'Click me' ? 'Clicked!' : 'Click me'">Click me</button>
+        
+        <!-- Shadow DOM-like nested structures -->
+        <div class="complex-widget" data-testid="widget-container">
+            <div class="widget-header">
+                <h4>Complex Widget</h4>
+                <button class="widget-close" aria-label="Close widget">×</button>
+            </div>
+            <div class="widget-body">
+                <input type="text" placeholder="Widget input">
+                <button class="widget-action">Widget Action</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test Interaction -->
+    <section class="section">
+        <h2>Test the Extension</h2>
+        <p>Try these steps:</p>
+        <ol>
+            <li>Click the UI Test Helper extension icon</li>
+            <li>Click "Start Inspection" in the popup</li>
+            <li>Hover over different elements to see them highlighted</li>
+            <li>Click on any element to see generated testing queries</li>
+            <li>Copy the queries you want to use</li>
+            <li>Press ESC to exit inspection mode</li>
+        </ol>
+        
+        <button onclick="document.getElementById('notification').classList.remove('hidden')" 
+                data-testid="show-notification">
+            Show Notification
+        </button>
+    </section>
+
+    <footer style="margin-top: 40px; text-align: center; color: #718096;">
+        <p>UI Test Helper Test Page - Perfect for testing element inspection!</p>
+    </footer>
+</body>
+</html> 

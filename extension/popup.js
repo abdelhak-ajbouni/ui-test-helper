@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const startBtn = document.getElementById('startInspection');
   const status = document.getElementById('status');
+  const docsBtn = document.getElementById('openDocs');
 
   let isInspecting = false;
 
@@ -152,5 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (message.action === 'inspectionStopped') {
       setInspectingState(false);
     }
+  });
+
+  // Docs button functionality
+  docsBtn.addEventListener('click', () => {
+    chrome.tabs.create({ url: 'https://testing-library.com/docs/queries/about/' });
+    window.close(); // Close popup after opening docs
   });
 });

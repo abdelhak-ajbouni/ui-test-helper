@@ -11,8 +11,6 @@ extension/
 ├── popup.html             # Extension popup interface
 ├── popup.css              # Popup styles
 ├── popup.js               # Popup functionality
-├── sidepanel.html         # Optional side panel UI
-├── sidepanel.js           # Side panel logic
 ├── inspector.js           # Main content script for element inspection
 ├── inspector.css          # Inspector UI styles
 ├── query-generator.js     # Query generation logic
@@ -58,22 +56,19 @@ Use the test pages to verify functionality:
 ### popup.html/css/js
 - Main extension interface (popup when clicking toolbar icon)
 - Start/stop inspection functionality
+- Documentation link to Testing Library queries
 - Error handling and user feedback
 
 ### background.js
-- Service worker for keyboard shortcuts and cross-tab communication
+- Service worker for keyboard shortcuts
 - Handles content script injection on demand
-- Manages side panel integration
+- No UI components - purely functional
 
 ### inspector.js/css + query-generator.js
 - Main content script injected into web pages
 - Handles element inspection, highlighting, and user interaction
 - Generates accessibility-first testing queries
 - Manages clipboard operations and results panel UI
-
-### sidepanel.html/js
-- Optional side panel UI for instructions and documentation links
-- Automatically opened on first extension use (Chrome versions that support it)
 
 ## 🔧 Configuration
 
@@ -87,14 +82,12 @@ Keyboard and icon support:
 - `commands` → `toggle-inspector` bound to `Alt+Shift+U`
 - Toolbar icon click opens popup interface
 - Background service worker handles keyboard shortcuts and injection
-- Side panel opens automatically for onboarding (where supported)
 
 ## 🐛 Debugging
 
 1. **Extension Popup**: Right-click extension icon → "Inspect popup"
 2. **Content Script**: Open DevTools on any webpage, check Console tab for inspector logs
 3. **Service Worker**: Go to `chrome://extensions/` → click `Service worker` link under the extension
-4. **Side Panel**: Open side panel and use DevTools to inspect
 
 ### Common Issues
 - **Not working on special pages**: Extension cannot run on `chrome://`, `edge://`, or extension pages

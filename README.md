@@ -79,8 +79,6 @@ ui-test-helper/
 │   ├── inspector.css       # Inspector UI styles
 │   ├── background.js       # Service worker
 │   ├── query-generator.js  # Query generation logic
-│   ├── sidepanel.html      # Side panel interface
-│   ├── sidepanel.js        # Side panel functionality
 │   └── icons/              # Extension icons (PNG format)
 
 ├── tests/                # Test suite
@@ -116,7 +114,6 @@ For testing the extension, you can use the included test pages:
 1. Open `extension/test.html` in your browser
 2. Load the extension
 3. Test the inspection functionality on various elements
-4. Use `extension/test-buttons.html` for specific button testing
 
 ### Running Tests
 
@@ -127,21 +124,9 @@ npm install
 # Run unit tests
 npm test
 
-# Run unit tests in watch mode
-npm run test:watch
-
 # Run end-to-end browser tests
 npm run test:e2e
 
-# Run E2E tests with UI
-npm run test:e2e:ui
-
-# Run all tests with coverage
-npm run test:coverage
-
-# Run all tests (unit + e2e)
-npm run test:all
-```
 
 ## Privacy & Security
 

@@ -68,19 +68,7 @@ chrome.commands.onCommand.addListener((command) => {
   }
 });
 
-// Click on toolbar icon toggles inspector and opens side panel on first run
-chrome.action.onClicked.addListener(async () => {
-  await toggleInspectorOnActiveTab();
-  try {
-    // Open side panel to show instructions the first time per tab
-    const tab = await getActiveTab();
-    if (tab && isScriptableUrl(tab.url)) {
-      await chrome.sidePanel.open({ tabId: tab.id });
-      await chrome.sidePanel.setOptions({ tabId: tab.id, path: 'sidepanel.html', enabled: true });
-    }
-  } catch (e) {
-    // Side panel may not be available in all Chrome versions
-  }
-});
+// Click on toolbar icon opens popup (default action)
+// No need for onClicked listener since popup is handled automatically
 
 

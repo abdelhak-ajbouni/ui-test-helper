@@ -213,14 +213,21 @@ describe('Query Generator', () => {
     });
 
     test('handles very long text content', () => {
-      const longText = 'a'.repeat(100);
+      const longText = 'This is a button with extremely long text content that exceeds normal length limits and should test how the extension handles very lengthy button labels and text content that might be truncated or cause issues with query generation';
       const para = createTestElement('p', {}, longText);
       const queries = queryGenerator.generateQueries(para);
 
-      // Should generate regex-based getByText for long semantic text
-      const byText = queries.find(q => q.type === 'getByText');
-      expect(byText).toBeDefined();
-      expect(byText.query.startsWith('getByText(/')).toBe(true);
+      // Should generate both regex-based and full text getByText queries for long text
+      const byTextQueries = queries.filter(q => q.type === 'getByText');
+      expect(byTextQueries.length).toBeGreaterThanOrEqual(1);
+      
+      // Should have at least one regex-based query
+      const regexQuery = byTextQueries.find(q => q.query.startsWith('getByText(/'));
+      expect(regexQuery).toBeDefined();
+      
+      // Should have the full text query as well
+      const fullTextQuery = byTextQueries.find(q => q.query === `getByText('${longText}')`);
+      expect(fullTextQuery).toBeDefined();
     });
 
     test('removes duplicate queries', () => {

@@ -82,7 +82,6 @@ class UITestHelper {
     if (
       (target && typeof target.closest === 'function') && (
         target.closest('.ui-test-helper-panel') ||
-        target.closest('.ui-test-helper-help-modal') ||
         target.closest('.ui-test-helper-explanation')
       )
     ) {
@@ -101,7 +100,6 @@ class UITestHelper {
     if (
       (element && typeof element.closest === 'function') && (
         element.closest('.ui-test-helper-panel') ||
-        element.closest('.ui-test-helper-help-modal') ||
         element.closest('.ui-test-helper-explanation')
       )
     ) {
@@ -169,23 +167,11 @@ class UITestHelper {
     title.textContent = 'Testing Queries';
     header.appendChild(title);
 
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'ui-test-helper-header-buttons';
-
-    const helpBtn = document.createElement('button');
-    helpBtn.className = 'ui-test-helper-help';
-    helpBtn.textContent = '?';
-    helpBtn.type = 'button';
-    helpBtn.title = 'Learn about query priorities';
-    buttonsContainer.appendChild(helpBtn);
-
     const closeBtn = document.createElement('button');
     closeBtn.className = 'ui-test-helper-close';
     closeBtn.textContent = '✕';
     closeBtn.type = 'button';
-    buttonsContainer.appendChild(closeBtn);
-
-    header.appendChild(buttonsContainer);
+    header.appendChild(closeBtn);
 
     panel.appendChild(header);
 
@@ -224,6 +210,7 @@ class UITestHelper {
 
         const typeDiv = document.createElement('div');
         typeDiv.className = 'ui-test-helper-query-type';
+        typeDiv.setAttribute('data-query-type', q.type);
 
         const typeText = document.createElement('span');
         typeText.textContent = q.type;
@@ -282,21 +269,12 @@ class UITestHelper {
 
     // Add event listeners
     const closeBtnElement = panel.querySelector('.ui-test-helper-close');
-    const helpBtnElement = panel.querySelector('.ui-test-helper-help');
 
     if (closeBtnElement) {
       closeBtnElement.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         this.hideResultsPanel();
-      });
-    }
-
-    if (helpBtnElement) {
-      helpBtnElement.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        this.showHelpModal();
       });
     }
 
@@ -419,92 +397,6 @@ class UITestHelper {
     }, 4000); // Show errors a bit longer
   }
 
-  showHelpModal() {
-    // Remove existing help modal if any
-    const existingModal = document.querySelector('.ui-test-helper-help-modal');
-    if (existingModal) {
-      existingModal.remove();
-    }
-
-    const modal = document.createElement('div');
-    modal.className = 'ui-test-helper-help-modal';
-    modal.innerHTML = `
-      <div class="ui-test-helper-help-overlay"></div>
-      <div class="ui-test-helper-help-content">
-        <div class="ui-test-helper-help-header">
-          <h3>Query Priority Guide</h3>
-          <button class="ui-test-helper-help-close">✕</button>
-        </div>
-        <div class="ui-test-helper-help-body">
-          <p>Testing Library recommends an accessibility-first approach. Queries are prioritized to encourage accessible testing practices:</p>
-          
-          <div class="ui-test-helper-priority-item">
-            <span class="ui-test-helper-priority-badge priority-1">1st Priority</span>
-            <div>
-              <strong>getByRole</strong> - Most accessible way to find elements
-              <p>Uses semantic HTML roles and accessible names</p>
-            </div>
-          </div>
-
-          <div class="ui-test-helper-priority-item">
-            <span class="ui-test-helper-priority-badge priority-2">2nd Priority</span>
-            <div>
-              <strong>getByLabelText</strong> - Great for form controls
-              <p>Uses label associations, ideal for form inputs</p>
-            </div>
-          </div>
-
-          <div class="ui-test-helper-priority-item">
-            <span class="ui-test-helper-priority-badge priority-3">3rd Priority</span>
-            <div>
-              <strong>getByPlaceholderText</strong> - For inputs with placeholders
-              <p>Less accessible than labels, but still user-visible</p>
-            </div>
-          </div>
-
-          <div class="ui-test-helper-priority-item">
-            <span class="ui-test-helper-priority-badge priority-4">4th+</span>
-            <div>
-              <strong>getByText, getByAltText, getByTitle, getByDisplayValue</strong>
-              <p>User-visible content and attributes</p>
-            </div>
-          </div>
-
-          <div class="ui-test-helper-priority-item">
-            <span class="ui-test-helper-priority-badge priority-fallback">Fallback</span>
-            <div>
-              <strong>getByTestId</strong> - Last resort
-              <p>Not user-visible, but reliable for testing</p>
-            </div>
-          </div>
-
-          <div class="ui-test-helper-help-footer">
-            <p><strong>Why this order?</strong> It encourages building accessible interfaces that work for all users, including those using screen readers.</p>
-          </div>
-        </div>
-      </div>
-    `;
-
-    document.body.appendChild(modal);
-
-    // Add event listeners
-    const closeBtn = modal.querySelector('.ui-test-helper-help-close');
-    const overlay = modal.querySelector('.ui-test-helper-help-overlay');
-
-    const closeModal = () => modal.remove();
-
-    closeBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', closeModal);
-
-    // Close on escape key
-    const handleEscape = (e) => {
-      if (e.key === 'Escape') {
-        closeModal();
-        document.removeEventListener('keydown', handleEscape);
-      }
-    };
-    document.addEventListener('keydown', handleEscape);
-  }
 
   showQueryExplanation(queryType) {
     const explanations = {

@@ -77,14 +77,27 @@ class QueryGenerator {
       
       if (hasDirectText) {
         // Short text: use exact string
-        if (textContent.length < 50) {
+        if (textContent.length <= 50) {
           queries.push({ type: 'getByText', query: `getByText('${textContent}')`, priority: 4 });
         } else {
-          const snippet = this.buildTextSnippet(textContent, 8, 50);
-          if (snippet) {
-            const regex = this.escapeRegex(snippet);
+          // For long text, provide multiple options
+          
+          // Option 1: Regex with a more comprehensive snippet (first meaningful words)
+          const startSnippet = this.buildTextSnippet(textContent, 10, 80);
+          if (startSnippet && startSnippet.length > 10) {
+            const regex = this.escapeRegex(startSnippet);
             queries.push({ type: 'getByText', query: `getByText(/${regex}/i)`, priority: 4 });
           }
+          
+          // Option 2: Exact match for those who prefer full text (with note about length)
+          const truncatedText = textContent.length > 100 ? textContent.substring(0, 100) + '...' : textContent;
+          const fullTextQuery = `getByText('${textContent}')`;
+          queries.push({ 
+            type: 'getByText', 
+            query: fullTextQuery, 
+            priority: 4,
+            note: textContent.length > 100 ? `Full text (${textContent.length} chars)` : undefined
+          });
         }
       }
     }
@@ -138,10 +151,14 @@ class QueryGenerator {
     const words = text.trim().split(/\s+/).slice(0, maxWords);
     let snippet = words.join(' ');
     if (snippet.length > maxChars) {
-      snippet = snippet.slice(0, maxChars);
+      // For longer allowed char limits, try to keep more meaningful content
+      const targetLength = Math.min(maxChars - 10, snippet.length); // Leave room for trimming
+      snippet = snippet.slice(0, targetLength);
       // Trim to last complete word
       const lastSpace = snippet.lastIndexOf(' ');
-      if (lastSpace > 0) snippet = snippet.slice(0, lastSpace);
+      if (lastSpace > maxWords > 4 ? 20 : 10) { // Keep minimum meaningful content
+        snippet = snippet.slice(0, lastSpace);
+      }
     }
     return snippet.trim();
   }

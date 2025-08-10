@@ -1,3 +1,8 @@
+---
+title: Privacy Policy
+layout: default
+---
+
 # Privacy Policy for UI Test Helper Chrome Extension
 
 **Last updated: August 10, 2025**

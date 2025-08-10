@@ -8,6 +8,10 @@ describe('Query Generator', () => {
     queryGenerator = new QueryGenerator();
   });
 
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
   describe('Button Elements', () => {
     test('generates getByRole and getByText for button with text', () => {
       const button = createTestElement('button', {}, 'Submit Form');
@@ -150,6 +154,53 @@ describe('Query Generator', () => {
       // Should be ordered: getByRole (1), getByText (4), getByTitle (6), getByTestId (8)
       expect(queries.map(q => q.priority)).toEqual([1, 4, 6, 8]);
       expect(queries.map(q => q.type)).toEqual(['getByRole', 'getByText', 'getByTitle', 'getByTestId']);
+    });
+  });
+
+  describe('getByText Direct Text Content', () => {
+    test('generates getByText for elements with direct text content', () => {
+      // Create a div with direct text: <div>text</div>
+      const div = createTestElement('div', {}, 'Direct text content');
+      const queries = queryGenerator.generateQueries(div);
+
+      const byText = queries.find(q => q.type === 'getByText');
+      expect(byText).toBeDefined();
+      expect(byText.query).toBe('getByText(\'Direct text content\')');
+    });
+
+    test('does not generate getByText for elements with nested text content', () => {
+      // Create a div with nested text: <div><p>text</p></div>
+      document.body.innerHTML = '<div id="parent"><p>Nested text content</p></div>';
+      const div = document.getElementById('parent');
+      
+      const queries = queryGenerator.generateQueries(div);
+
+      const byText = queries.find(q => q.type === 'getByText');
+      expect(byText).toBeUndefined();
+    });
+
+    test('generates getByText for mixed content when direct text exists', () => {
+      // Create element with both direct text and child elements
+      document.body.innerHTML = '<div id="mixed">Direct text <span>nested</span></div>';
+      const div = document.getElementById('mixed');
+      
+      const queries = queryGenerator.generateQueries(div);
+
+      const byText = queries.find(q => q.type === 'getByText');
+      expect(byText).toBeDefined();
+      // Should match the full textContent including nested elements
+      expect(byText.query).toBe('getByText(\'Direct text nested\')');
+    });
+
+    test('handles elements with only whitespace as direct children', () => {
+      // Create element with only whitespace and nested elements
+      document.body.innerHTML = '<div id="whitespace">   <p>Only nested</p>   </div>';
+      const div = document.getElementById('whitespace');
+      
+      const queries = queryGenerator.generateQueries(div);
+
+      const byText = queries.find(q => q.type === 'getByText');
+      expect(byText).toBeUndefined();
     });
   });
 

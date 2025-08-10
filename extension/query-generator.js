@@ -70,10 +70,12 @@ class QueryGenerator {
       });
     }
 
-    // Priority 4: getByText (semantic text tags + buttons)
+    // Priority 4: getByText (only for elements with direct text content)
     if (textContent && textContent.length > 0) {
-      const allowedTextTags = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'span', 'button']);
-      if (allowedTextTags.has(tagName)) {
+      // Check if element has direct text content (not nested in child elements)
+      const hasDirectText = this.hasDirectTextContent(element);
+      
+      if (hasDirectText) {
         // Short text: use exact string
         if (textContent.length < 50) {
           queries.push({ type: 'getByText', query: `getByText('${textContent}')`, priority: 4 });
@@ -204,6 +206,16 @@ class QueryGenerator {
     }
 
     return null;
+  }
+
+  hasDirectTextContent(element) {
+    // Check if the element has text nodes as direct children
+    for (let child of element.childNodes) {
+      if (child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
